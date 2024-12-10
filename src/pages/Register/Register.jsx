@@ -1,7 +1,28 @@
 import Lottie from "lottie-react";
 
 import registerlottieData from '../../assets/lottie/register.json'
+import { useContext } from "react";
+import AuthContext from "../../context/Authcontext/AuthContext";
 const Register = () => {
+
+    const { createUser } = useContext(AuthContext);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+        //* password validation
+        //* show password validation error
+        createUser(email, password)
+            .then(data => {
+            console.log(data.user);
+            })
+            .catch(error => {
+            console.log('ERROR', error);
+        })
+    }
     return (
       <div>
         <div className="hero bg-base-200 min-h-screen">
@@ -10,7 +31,7 @@ const Register = () => {
             <Lottie animationData={registerlottieData}></Lottie>
             </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-              <form className="card-body">
+              <form onSubmit={handleSubmit} className="card-body">
               <h1 className="text-5xl font-bold">Register now!</h1>
                 <div className="form-control">
                   <label className="label">
@@ -18,7 +39,8 @@ const Register = () => {
                   </label>
                   <input
                     type="email"
-                    placeholder="email"
+                                    placeholder="email"
+                                    name="email"
                     className="input input-bordered"
                     required
                   />
@@ -29,7 +51,8 @@ const Register = () => {
                   </label>
                   <input
                     type="password"
-                    placeholder="password"
+                                    placeholder="password"
+                                    name="password"
                     className="input input-bordered"
                     required
                   />
