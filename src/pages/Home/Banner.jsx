@@ -5,7 +5,7 @@ import team2 from '../../assets/team2.jpg'
 const Banner = () => {
   return (
     <div>
-      <div className="hero  min-h-screen">
+      <div className="hero  min-h-screen border-2">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="flex-1">
                       <motion.img
@@ -16,7 +16,7 @@ const Banner = () => {
             />
                       <motion.img
                           animate={{ x: [100, 150, 100] }}
-                          transition={{duration:10, repeat:Infinity}}
+                          transition={{duration:10,delay:5, repeat:Infinity}}
               src={team2}
               className="max-w-sm w-64 rounded-t-[46px] rounded-br-[46px] border-l-8 border-b-8 border-blue-400 rounded-lg shadow-2xl"
             />
