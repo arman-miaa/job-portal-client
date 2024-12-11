@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AuthContext from "../../context/Authcontext/AuthContext";
-
+import logo from '../../assets/logo.png'
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext);
     const handleSignOut = () => {
@@ -50,7 +50,8 @@ const Navbar = () => {
                 {links}
               </ul>
             </div>
-            <a className="btn btn-ghost text-xl">daisyUI</a>
+            <img src={logo} alt="" />
+            <a className="btn btn-ghost text-xl">Job Portal</a>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{links}</ul>
