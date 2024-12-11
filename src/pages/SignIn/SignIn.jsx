@@ -1,10 +1,16 @@
 import Lottie from "lottie-react";
 import loginLottieData from '../../assets/lottie/login.json'
-import { useContext } from "react";
+import { useContext } from "react"; 
 import AuthContext from "../../context/Authcontext/AuthContext";
 import SocialLogin from "../Shered/SocialLogin";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+  const from = location?.state || '/';
+  console.log(from);
     const { signInUser } = useContext(AuthContext);
      const handleSignIn = (e) => {
        e.preventDefault();
@@ -14,7 +20,8 @@ const SignIn = () => {
          console.log(email, password);
          signInUser(email, password)
              .then(data => {
-             console.log('sign in ', data.user);
+               console.log('sign in ', data.user);
+               navigate(from)
              })
              .catch(error => {
              console.log('ERROR', error);

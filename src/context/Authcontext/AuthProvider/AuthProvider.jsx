@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AuthContext from "../AuthContext";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../../../firebase/firebase.init";
+import { div } from "motion/react-client";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const signInUser = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password);
     }
 
@@ -29,11 +31,11 @@ const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currectUser => {
-            setUser(currectUser);
-            // console.log('state capture', currectUser);
-            setLoading(false)
-        })
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+          setUser(currentUser);
+          // console.log('state capture', currectUser);
+          setLoading(false);
+        });
         return () => {
             unsubscribe();
         }
@@ -48,11 +50,15 @@ const AuthProvider = ({ children }) => {
       signInWithGoogle,
     };
     return (
-        <div>
-            <AuthContext.Provider value={authInfo}>
-{children}
-            </AuthContext.Provider>
-        </div>
+      <div>
+        {loading ? (
+          <p className="h-screen flex items-center justify-center">loading....</p>
+        ) : (
+          <AuthContext.Provider value={authInfo}>
+            {children}
+          </AuthContext.Provider>
+        )}
+      </div>
     );
 };
 
