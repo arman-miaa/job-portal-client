@@ -13,11 +13,17 @@ const Navbar = () => {
             console.log("ERROR", error);
           });
 }
-    const links = <>
-    <li><NavLink>Home</NavLink></li>
-    <li><NavLink>Home2</NavLink></li>
-    <li><NavLink>Home 3</NavLink></li>
-    </>
+    const links = (
+      <>
+        <li>
+        <NavLink to='/'>Home</NavLink> 
+        </li>
+      
+        <li>
+          <NavLink to="/myApplications">myApplications</NavLink>
+        </li>
+      </>
+    );
     return (
       <div className="navbar bg-base-100 sticky top-0 left-0 z-50">
         <div className="navbar-start">
