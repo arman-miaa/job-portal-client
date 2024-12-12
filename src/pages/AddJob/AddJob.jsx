@@ -1,9 +1,48 @@
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const AddJob = () => {
+    const { user } = useAuth();
+    const handleAddJob = e => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        // console.log(formData.entries());
+        const initialData = Object.fromEntries(formData.entries());
+        // console.log(initialData);
+        const { min, max, currency, ...newJob } = initialData;
+        // console.log(newJob);
+        newJob.salaryRange = { min, max, currency };
+        newJob.requirements = newJob.requirements.split("\n");
+        newJob.responsibilities = newJob.responsibilities.split('\n');
+        console.log(newJob);
+
+        fetch("http://localhost:3000/jobs", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newJob),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+              if (data.insertedId)
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your job added has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                    navigate("/myApplications");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
     return (
       <div>
         <h2 className="text-3xl">Post a new Job</h2>
-        <form  className="card-body">
+        <form onSubmit={handleAddJob}  className="card-body">
           {/* Job title */}
           <div className="form-control">
             <label className="label">
@@ -167,7 +206,7 @@ const AddJob = () => {
             </label>
             <input
               type="text"
-            //   defaultValue={user?.email}
+              defaultValue={user?.email}
               name="hr_email"
               placeholder="HR Email"
               className="input input-bordered"
