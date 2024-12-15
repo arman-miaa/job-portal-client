@@ -4,23 +4,29 @@ import { useContext } from "react";
 import AuthContext from "../../context/Authcontext/AuthContext";
 import SocialLogin from "../Shered/SocialLogin";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignIn = () => {
   const location = useLocation();
   const navigate = useNavigate();
   // console.log(location);
   const from = location?.state || '/';
-  console.log(from);
+  // console.log(from);
     const { signInUser } = useContext(AuthContext);
      const handleSignIn = (e) => {
        e.preventDefault();
        const form = e.target;
        const email = form.email.value;
        const password = form.password.value;
-         console.log(email, password);
+        //  console.log(email, password);
          signInUser(email, password)
              .then(data => {
-               console.log('sign in ', data.user);
+               console.log('sign in ', data.user.email);
+               const user = { email: email };
+               axios.post("http://localhost:3000/jwt", user)
+                 .then(data => {
+                 console.log(data);
+               })
                navigate(from)
              })
              .catch(error => {
@@ -69,7 +75,7 @@ const SignIn = () => {
                     </label>
                   </div>
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary">Register</button>
+                    <button className="btn btn-primary">LogIn</button>
                   </div>
                 </form>
                 <SocialLogin></SocialLogin>

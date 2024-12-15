@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ViewApplications = () => {
 
@@ -17,7 +18,15 @@ const ViewApplications = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+          if (data.modifiedCount)
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Status has been updated",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+                       
       });
 }
 
