@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const MyApplilcations = () => {
     const { user } = useAuth();
@@ -13,7 +14,11 @@ const MyApplilcations = () => {
             .then(res => res.json())
             .then(data => {
             setJobs(data)
-        })
+            })
+          .catch(error => {
+        console.log(error);
+      })
+ 
     },[user.email])
 
     return (

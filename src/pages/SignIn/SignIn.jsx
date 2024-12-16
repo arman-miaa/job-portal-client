@@ -23,11 +23,12 @@ const SignIn = () => {
              .then(data => {
                console.log('sign in ', data.user.email);
                const user = { email: email };
-               axios.post("http://localhost:3000/jwt", user)
-                 .then(data => {
-                 console.log(data);
+               axios.post("http://localhost:3000/jwt", user, {
+                 withCredentials:true})
+                 .then(res => {
+                 console.log(res.data);
                })
-               navigate(from)
+              //  navigate(from)
              })
              .catch(error => {
              console.log('ERROR', error);
@@ -44,7 +45,7 @@ const SignIn = () => {
               </div>
               <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                 <form onSubmit={handleSignIn} className="card-body">
-                  <h1 className="text-5xl font-bold">Register now!</h1>
+                  <h1 className="text-5xl font-bold">LogIn now!</h1>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Email</span>
