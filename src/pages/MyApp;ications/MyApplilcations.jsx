@@ -8,16 +8,22 @@ const MyApplilcations = () => {
     console.log(jobs);
 
     useEffect(() => {
-        fetch(
-          `http://localhost:3000/job-applications?email=${user.email}`
-        )
-            .then(res => res.json())
-            .then(data => {
-            setJobs(data)
-            })
-          .catch(error => {
-        console.log(error);
-      })
+      //   fetch(
+      //     `http://localhost:3000/job-applications?email=${user.email}`
+      //   )
+      //       .then(res => res.json())
+      //       .then(data => {
+      //       setJobs(data)
+      //       })
+      //     .catch(error => {
+      //   console.log(error);
+      // })
+
+      axios
+        .get(`http://localhost:3000/job-applications?email=${user.email}`,{withCredentials:true})
+        .then((res) => {
+          setJobs(res.data);
+        });
  
     },[user.email])
 
